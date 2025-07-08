@@ -6,6 +6,7 @@ import http from "http";
 import { Server as SocketServer } from "socket.io";
 import { connectDB } from "./config/db";
 import authRoutes from "./routes/authRoutes";
+import messageRoutes from "./routes/messageRoutes"
 
 dotenv.config();
 const app = express();
@@ -18,6 +19,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/messages", messageRoutes)
 
 // Create HTTP server and attach Socket.io
 const server = http.createServer(app);
@@ -25,7 +27,7 @@ const io = new SocketServer(server, {
   cors: { origin: "*" },
 });
 
-// Setup Socket.io logic
+// Setup Socket.io
 io.on("connection", (socket) => {
   console.log("🔌 New client connected:", socket.id);
 
