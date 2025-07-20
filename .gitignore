@@ -1,0 +1,18 @@
+# Ignore log files
+*.log
+
+# Ignore node_modules in both client and server
+client/node_modules/
+server/node_modules/
+
+# Ignore environment variables
+server/.env
+client/.env
+
+# Ignore compiled or temporary folders
+client/dist/
+server/dist/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
