@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser"
 import mongoose from "mongoose"
 import authRoutes from "./routes/AuthRoutes.js"
 
+
 dotenv.config()
 
 const app = express()
@@ -17,13 +18,11 @@ app.use(cors({
     credentials:true,
 }))
 
+app.use("/api/auth", authRoutes)
 //GET COOKIES FROM FRONTEND
 app.use(cookieParser())
 
 app.use(express.json())
-
-
-app.use("/api/auth", authRoutes)
 
 const server = app.listen(port, () => {
     console.log(`server running on ${port} ...`);    
