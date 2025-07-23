@@ -6,13 +6,27 @@ import { Input } from "@/components/ui/input"
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 import { apiClient } from "@/lib/api-client"
+import { LOGIN_ROUTES, SIGNUP_ROUTES } from '@/utils/constants'
+import { useNavigate } from 'react-router-dom'
 
 const Auth = () => {
-
+    
+    const navigate = useNavigate()
     const [email, setEmail] = useState("")
     const [password, setpassword] = useState("")
     const [confirmPassword, setconfirmPassword] = useState("")
 
+    const validateLogin = () =>{
+        if(!email.length){
+            toast.error("Email is required")
+            return false
+        }
+        if(!password.length){
+            toast.error("Password is required")
+            return false
+        }
+            return true
+    }
     const validateSignup = () =>{
         if(!email.length){
             toast.error("Email is required")
@@ -29,13 +43,28 @@ const Auth = () => {
             return true
     }
     const handleLogin = async () =>{
-        
+        if(validateLogin()){
+            const res  = await apiClient.post(LOGIN_ROUTES,
+            {email, password},
+            { withCredentials: true })
+            if(res.data.id){
+                if(res.data.user.profileSetup) navigate("/chat")
+                    else navigate("/profile")
+            }
+            console.log(res); 
+        }
+       
     }
 
     const handleSignup = async () =>{
         if(validateSignup()){
             alert("Done")
-            const res = await apiClient.post(SIGNUP_ROUTE, { email, password })
+            const res = await apiClient.post(SIGNUP_ROUTES, 
+            { email, password },
+            { withCredentials: true })
+             if(res.status === 200){
+            navigate("/profile")
+        }
             console.log("done");
         }
     }
@@ -52,7 +81,7 @@ const Auth = () => {
                     <p className='font-medium text-center'>Fill in the details to get start the App!</p>
                 </div>
                 <div className='flex items-center justify-center w-full'>
-                    <Tabs className="w-3/4">
+                    <Tabs className="w-3/4" defaultValue="login">
                         <TabsList className="bg-transparent rounded-none w-full">
                             <TabsTrigger value="login"
                             className="data-[state=active]:bg-transparent text-black text-opacity-90 border-b-2 rounded-none w-full data-[state=active]:text-black data-[state=active]:font-semibold data-[state=active]:border-b-purple-600 p-3 transition-all duration-300"
