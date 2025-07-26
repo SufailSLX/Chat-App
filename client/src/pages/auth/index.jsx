@@ -47,7 +47,7 @@ const Auth = () => {
             const res  = await apiClient.post(LOGIN_ROUTES,
             {email, password},
             { withCredentials: true })
-            if(res.data.id){
+            if(res.data.user.id){
                 if(res.data.user.profileSetup) navigate("/chat")
                     else navigate("/profile")
             }
@@ -62,10 +62,10 @@ const Auth = () => {
             const res = await apiClient.post(SIGNUP_ROUTES, 
             { email, password },
             { withCredentials: true })
-             if(res.status === 200){
+             if(res.status === 201){
             navigate("/profile")
         }
-            console.log("done");
+            console.log({ res });
         }
     }
 
