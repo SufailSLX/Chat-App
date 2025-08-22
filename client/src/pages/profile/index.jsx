@@ -1,7 +1,7 @@
 import { useAppStore } from '@/store'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import IoArrowBack from "react-icons/io5"
+import { IoArrowBack } from "react-icons/io5"
 const Profile = () => {
 
   const navigate = useNavigate()
