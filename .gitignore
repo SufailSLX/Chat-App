@@ -1,5 +1,6 @@
 # Ignore log files
 *.log
+node_modules
 
 # Ignore node_modules in both client and server
 client/node_modules/
